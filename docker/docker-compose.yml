@@ -1,0 +1,29 @@
+version: '3'
+services:
+  biblio-db-data:
+    image: postgres
+    container_name: stock-db
+    volumes:
+      - biblio_stock:/var/lib/postgresql/stock
+    ports:
+      - "5438:5432"
+    environment:
+      - POSTGRES_DB=db_stock
+      - POSTGRES_USER=stock_users
+      - POSTGRES_PASSWORD=stock_pasword
+  provider-app:
+    build: ../restcmd
+    container_name: provider
+    environment:
+      - BIBLIO_DB_DATAPROVIDER_SERVICE_HOST=peredhel
+      - BIBLIO_DB_DATAPROVIDER_SERVICE_PORT=5438
+      - BIBLIO_DB_DATAPROVIDER_POSTGRES_DB=db_stock
+      - POSTGRES_USER=stock_users
+      - POSTGRES_PASSWORD=stock_pasword
+    ports:
+      - "8090:8080"
+    links:
+      - biblio-db-data
+    image: dmissud/provider_app:0.0.1-SNAPSHOT
+volumes:
+  biblio_stock:

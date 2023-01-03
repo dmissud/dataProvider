@@ -1,0 +1,9 @@
+{
+  "properties": [
+    {
+      "name": "ssh.shell.enabled",
+      "type": "java.lang.String",
+      "description": "Description for ssh.shell.enabled."
+    }
+  ]
+}
