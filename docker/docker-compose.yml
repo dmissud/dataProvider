@@ -25,5 +25,14 @@ services:
     links:
       - biblio-db-data
     image: dmissud/provider_app:0.0.1-SNAPSHOT
+  biblio-ui:
+      build: ../../guiBiblio
+      container_name: biblio_ui
+      ports:
+        - 80:80
+      links:
+        - provider-app
+      image: dmissud/biblio_ui:latest
+
 volumes:
   biblio_stock:
