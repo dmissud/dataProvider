@@ -1,5 +1,5 @@
 databaseChangeLog:
   - include:
-      file: "db/changelog/2022/11/12-01-changelog.xml"
+      file: "/db/changelog/db.structure-changelog.yaml"
   - include:
-      file: "db/changelog/data/isbn/isbn-load.xml"
+      file: "/db/changelog/db.data-changelog.yaml"
