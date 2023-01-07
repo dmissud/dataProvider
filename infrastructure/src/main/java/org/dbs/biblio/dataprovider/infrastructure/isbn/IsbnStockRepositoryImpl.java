@@ -13,30 +13,30 @@ import java.util.Set;
 @Repository
 public class IsbnStockRepositoryImpl implements IsbnStockRepository {
 
-    private final IsbnEntityJpa isbnEntityJpa;
+    private final IsbnEntityRepository isbnEntityRepository;
     private final IsbnMapper isbnMapper;
 
     @Autowired
-    public IsbnStockRepositoryImpl(IsbnEntityJpa isbnEntityJpa, IsbnMapper isbnMapper) {
-        this.isbnEntityJpa = isbnEntityJpa;
+    public IsbnStockRepositoryImpl(IsbnEntityRepository isbnEntityRepository, IsbnMapper isbnMapper) {
+        this.isbnEntityRepository = isbnEntityRepository;
         this.isbnMapper = isbnMapper;
     }
 
     @Override
     public long sizeOfStock() {
-        return this.isbnEntityJpa.count();
+        return this.isbnEntityRepository.count();
     }
 
     @Override
     public Set<IsbnBook> findIsbnsByPage(int pos, int sizeOfPage) {
         Pageable pageRequest = PageRequest.of(pos, sizeOfPage);
-        return isbnMapper.buildIsbnBookSetFromIsbnEntitySet(this.isbnEntityJpa.findAll(pageRequest).toSet());
+        return isbnMapper.buildIsbnBookSetFromIsbnEntitySet(this.isbnEntityRepository.findAll(pageRequest).toSet());
     }
 
     @Override
     public IsbnBook findIsbnsByPosition(int position) {
         Pageable pageRequest = PageRequest.of(position, 1);
-        List<IsbnEntity> isbnEntities = isbnEntityJpa.findAll(pageRequest).toList();
+        List<IsbnEntity> isbnEntities = isbnEntityRepository.findAll(pageRequest).toList();
         return isbnMapper.buildIsbnBookFromIsbnEntity(isbnEntities.get(0));
     }
 

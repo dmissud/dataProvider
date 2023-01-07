@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - include:
+      file: "/db/changelog/data/isbn/isbn-load.xml"
+  - include:
+      file: "/db/changelog/data/name/firstname-load.xml"
+  - include:
+      file: "/db/changelog/data/name/lastname-load.xml"
