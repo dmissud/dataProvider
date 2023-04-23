@@ -3,6 +3,7 @@ package org.dbs.biblio.dataprovider.application.service;
 import org.dbs.biblio.dataprovider.application.common.LogExecutionTime;
 import org.dbs.biblio.dataprovider.application.port.in.query.DataDescription;
 import org.dbs.biblio.dataprovider.application.port.in.query.DataProviderDescriptionQuery;
+import org.dbs.biblio.dataprovider.application.port.out.AddressRepository;
 import org.dbs.biblio.dataprovider.application.port.out.FirstNameRepository;
 import org.dbs.biblio.dataprovider.application.port.out.IsbnStockRepository;
 import org.dbs.biblio.dataprovider.application.port.out.LastNameRepository;
@@ -16,13 +17,16 @@ public class DataProviderQueryImpl implements DataProviderDescriptionQuery {
     private final IsbnStockRepository isbnStockRepository;
     private final FirstNameRepository firstNameRepository;
     private final LastNameRepository lastNameRepository;
+    private final AddressRepository adresseRepository;
 
     public DataProviderQueryImpl(IsbnStockRepository isbnStockRepository,
                                  FirstNameRepository firstNameRepository,
-                                 LastNameRepository lastNameRepository) {
+                                 LastNameRepository lastNameRepository,
+                                 AddressRepository adresseRepository) {
         this.firstNameRepository = firstNameRepository;
         this.isbnStockRepository = isbnStockRepository;
         this.lastNameRepository = lastNameRepository;
+        this.adresseRepository = adresseRepository;
     }
 
     @Override
@@ -32,6 +36,8 @@ public class DataProviderQueryImpl implements DataProviderDescriptionQuery {
         enrichWithIsbn(dataDescriptions);
         enrichWithFirstName(dataDescriptions);
         enrichWithLastName(dataDescriptions);
+        enrichWithAdresse(dataDescriptions);
+        enrichWithCity(dataDescriptions);
         return dataDescriptions;
     }
 
@@ -53,6 +59,20 @@ public class DataProviderQueryImpl implements DataProviderDescriptionQuery {
         dataDescriptions.add(DataDescription.builder()
                 .dataName(LastNameRepository.LAST_NAME)
                 .sizeOf(this.lastNameRepository.sizeOfLastName())
+                .build());
+    }
+
+    private void enrichWithAdresse(Set<DataDescription> dataDescriptions) {
+        dataDescriptions.add(DataDescription.builder()
+                .dataName(AddressRepository.ADRESSE_NAME)
+                .sizeOf(this.adresseRepository.sizeOfAdresse())
+                .build());
+    }
+
+    private void enrichWithCity(Set<DataDescription> dataDescriptions) {
+        dataDescriptions.add(DataDescription.builder()
+                .dataName(AddressRepository.CITY_NAME)
+                .sizeOf(this.adresseRepository.numberOfCity())
                 .build());
     }
 }

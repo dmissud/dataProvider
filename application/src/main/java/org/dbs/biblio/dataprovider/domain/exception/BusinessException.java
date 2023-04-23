@@ -1,4 +1,4 @@
-package org.dbs.biblio.dataprovider.domain.exeception;
+package org.dbs.biblio.dataprovider.domain.exception;
 
 public class BusinessException extends RuntimeException {
     public BusinessException(String message) {

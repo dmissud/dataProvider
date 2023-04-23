@@ -8,9 +8,10 @@ public abstract class SelfValidating<T> {
 
     private final Validator validator;
 
-    public SelfValidating() {
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        validator = factory.getValidator();
+    protected SelfValidating() {
+        try (ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
+            validator = factory.getValidator();
+        }
     }
 
     public void validate() {
